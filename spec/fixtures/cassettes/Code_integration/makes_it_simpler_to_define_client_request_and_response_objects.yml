@@ -1,0 +1,82 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://jsonplaceholder.typicode.com/users/1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+      Expect:
+      - ''
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 14 Dec 2016 09:06:59 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '509'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d1f320eff069aed12572b61acd63d83621481706418; expires=Thu, 14-Dec-17
+        09:06:58 GMT; path=/; domain=.typicode.com; HttpOnly
+      X-Powered-By:
+      - Express
+      Vary:
+      - Origin, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - public, max-age=14400
+      Pragma:
+      - no-cache
+      Expires:
+      - Wed, 14 Dec 2016 13:06:59 GMT
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"1fd-BL+OPRQhpvs4ykGLR+b8gQ"
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - REVALIDATED
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 311080bb0ee720de-LAX
+    body:
+      encoding: UTF-8
+      string: |-
+        {
+          "id": 1,
+          "name": "Leanne Graham",
+          "username": "Bret",
+          "email": "Sincere@april.biz",
+          "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+              "lat": "-37.3159",
+              "lng": "81.1496"
+            }
+          },
+          "phone": "1-770-736-8031 x56442",
+          "website": "hildegard.org",
+          "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+          }
+        }
+    http_version: 
+  recorded_at: Wed, 14 Dec 2016 09:06:59 GMT
+recorded_with: VCR 3.0.3
