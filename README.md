@@ -31,12 +31,12 @@ module MyGem
     private
 
     def default_opts
+      # At least include `host`. Other things you may need to include: `token`, `secret`
       { host: HOST, secret: MyGem.configuration.secret }
     end
   end
 
   class Client
-    # You may also give a hash directly
     HOST = "https://production.com"
     include APIClientBase::Client.module(default_opts: {host: HOST})
   end
@@ -61,7 +61,6 @@ module MyGem
     private
 
     def all_opts
-      # At least include `host`. Other things you may need to include: `token`, `secret`
       { host: "http://prod.com" }
     end
   end
@@ -86,7 +85,13 @@ module MyGem
     private
 
     def path
-      "/api/v1/users/#{self.user_id}"
+      # all occurrences of `/:\w+/` in the string will have the matches replaced with the
+      # request object's value of that method. For example, if `request.user_id` is 33
+      # then you will get "/api/v1/users/33" as the path
+      "/api/v1/users/:user_id"
+
+      # Or you can interpolate it yourself if you want
+      # "/api/v1/users/#{self.user_id}"
     end
 
     # Following methods are optional. Override them if you need to send something specific
