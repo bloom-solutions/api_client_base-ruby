@@ -6,10 +6,10 @@ module APIClientBase
         define_method action_name do |args={}|
           namespace = self.class.name.deconstantize.constantize
 
-          request_class_name = [action_name.to_s.classify, "Request"].join
+          request_class_name = [action_name.to_s.camelize, "Request"].join
           request_class = namespace.const_get(request_class_name)
 
-          response_class_name = [action_name.to_s.classify, "Response"].join
+          response_class_name = [action_name.to_s.camelize, "Response"].join
           response_class = namespace.const_get(response_class_name)
 
           if opts[:args].is_a?(Array)

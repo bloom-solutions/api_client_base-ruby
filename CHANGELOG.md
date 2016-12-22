@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Do not require arguments to be passed into api actions
+- Do not singularize the action_name. Call camelize instead of classify
 
 ## [0.1.0] - 2016-12-15
 ### Added
