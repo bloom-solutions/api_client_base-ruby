@@ -16,6 +16,34 @@ This gem assumes your gem will follow a certain structure.
   - Request class takes care of appending the endpoint's path to the host, preparing params, and specifying the right http method to call
   - Response class takes care of parsing the response and making the data easily accessible for consumption.
 
+### Configuring the gem's base module
+
+Do this:
+
+```ruby
+module MyGem
+  include APIClientBase::Base.module
+
+  with_configuration do
+    has :host, classes: String
+    has :username, classes: String
+    has :password, classes: String
+  end
+end
+```
+
+And you can
+
+- configure the gem's base module with defaults:
+
+```ruby
+MyGem.configure do |c|
+  c.host = "https://test.api.com"
+end
+```
+
+- instantiate `MyGem::Client` by calling `MyGem.new(host: "https://api.com", username: "user", password: "password")`. If you do not specify an option, it will use the gem's default.
+
 ### Configuring the `Client`
 
 #### Default Options
