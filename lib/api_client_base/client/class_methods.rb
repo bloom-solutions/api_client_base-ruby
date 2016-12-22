@@ -3,7 +3,7 @@ module APIClientBase
     module ClassMethods
 
       def api_action(action_name, opts={})
-        define_method action_name do |args|
+        define_method action_name do |args={}|
           namespace = self.class.name.deconstantize.constantize
 
           request_class_name = [action_name.to_s.classify, "Request"].join

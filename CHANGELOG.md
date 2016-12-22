@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Convenience module for gem's base module
 
+### Fixed
+- Do not require arguments to be passed into api actions
+
 ## [0.1.0] - 2016-12-15
 ### Added
 - Initial release

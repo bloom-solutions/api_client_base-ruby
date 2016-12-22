@@ -34,7 +34,7 @@ end
 
 And you can
 
-- configure the gem's base module with defaults:
+- configure (thanks to [gem_config](https://github.com/krautcomputing/gem_config)) the gem's base module with defaults:
 
 ```ruby
 MyGem.configure do |c|
