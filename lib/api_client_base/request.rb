@@ -32,15 +32,20 @@ module APIClientBase
     end
 
     def call
-      request = Typhoeus::Request.new(
-        uri,
-        method: action,
-        headers: headers,
-        body: body,
-        params: params,
-      )
+      require "typhoeus"
+      if defined?(Typhoeus)
+        request = Typhoeus::Request.new(
+          uri,
+          method: action,
+          headers: headers,
+          body: body,
+          params: params,
+        )
 
-      request.run
+        request.run
+      else
+        fail "Either override #call or make sure Typhoeus is available for use."
+      end
     end
 
     private

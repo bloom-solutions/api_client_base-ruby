@@ -102,9 +102,12 @@ You still need to create `MyGem::GetUserRequest` and `MyGem::GetUserResponse`. S
 
 #### Requests
 
+Requests assume a REST-like structure. This currently does not play well with a SOAP server. You could still use the `Base`, `Client`, and `Response` modules however. For SOAP APIs, write your own Request class that defines `#call`. This method needs to return the `raw_response`.
+
 ```ruby
 module MyGem
   class GetUserRequest
+    # You must install typhoeus if you use the `APIClientBase::Request`. Add it to your gemfile.
     include APIClientBase::Request.module(
       # you may define the action by `action: :post`. Defaults to `:get`.
       # You may also opt to define `#default_action` (see below)
