@@ -11,6 +11,7 @@ module APIClientBase
             include Virtus.model
             attribute :host, String
             api_action :argless_call
+            api_action :get_post
             api_action :get_balls
             api_action :get_comment, args: [:post_id, :name]
 
@@ -41,6 +42,33 @@ module APIClientBase
 
           class GetBallsResponse
             include APIClientBase::Response.module
+          end
+
+          class GetPostRequest
+            include APIClientBase::Request.module
+            attribute :id
+
+            def path
+              "/posts/:id"
+            end
+          end
+
+          class GetPostResponse
+            include APIClientBase::Response.module
+            attribute :id, String, default: :default_id
+            attribute :title, String, default: :default_title
+
+            def default_id
+              data["id"]
+            end
+
+            def default_title
+              data["title"]
+            end
+
+            def data
+              JSON.parse(raw_response.body)
+            end
           end
 
           class GetCommentRequest
@@ -77,9 +105,13 @@ module APIClientBase
         end
       end
 
-      it "allows calls without args" do
-        client = TestGemClient::Client.new(host: "http://google.com")
-        expect { client.argless_call }.to_not raise_error
+      it "allows calls with implicit args", vcr: {record: :once} do
+        client = TestGemClient::Client.new(
+          host: "http://jsonplaceholder.typicode.com/",
+        )
+        response = client.get_post(id: 2)
+        expect(response.id).to eq "2"
+        expect(response.title).to eq "qui est esse"
       end
 
       it "allows customization of arity/args", vcr: {record: :once} do

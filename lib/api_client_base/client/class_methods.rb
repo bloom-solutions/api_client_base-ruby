@@ -16,7 +16,7 @@ module APIClientBase
             request_args = opts[:args].each_with_object({}).
               with_index { |(arg, hash), i| hash[arg] = args[i] }
           else
-            request_args = {}
+            request_args = args.first || {}
           end
 
           default_request_opts_method =
