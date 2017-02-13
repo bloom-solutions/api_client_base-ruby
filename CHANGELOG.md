@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [TBA]
+## [0.2.1] - 2017-02-13
 ### Fixed
 - bug with customizing the args of an `api_action` (it didn't work at all!)
 - when building path, escape the values
