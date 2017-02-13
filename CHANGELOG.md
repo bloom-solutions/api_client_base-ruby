@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [TBA]
+### Fixed
+- bug with customizing the args of an `api_action` (it didn't work at all!)
+
 ## [0.2.0]
 ### Added
 - Convenience module for gem's base module

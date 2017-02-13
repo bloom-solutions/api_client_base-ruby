@@ -3,7 +3,7 @@ module APIClientBase
     module ClassMethods
 
       def api_action(action_name, opts={})
-        define_method action_name do |args={}|
+        define_method action_name do |*args|
           namespace = self.class.name.deconstantize.constantize
 
           request_class_name = [action_name.to_s.camelize, "Request"].join
@@ -16,7 +16,7 @@ module APIClientBase
             request_args = opts[:args].each_with_object({}).
               with_index { |(arg, hash), i| hash[arg] = args[i] }
           else
-            request_args = args
+            request_args = {}
           end
 
           default_request_opts_method =

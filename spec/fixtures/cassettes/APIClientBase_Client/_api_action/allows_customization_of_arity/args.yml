@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://jsonplaceholder.typicode.com/comments?name=id%20labore%20ex%20et%20quam%20laborum&postId=1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+      Expect:
+      - ''
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 13 Feb 2017 02:17:13 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Content-Length:
+      - '286'
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=d75ce41732006a848ce956df67ef688821486952233; expires=Tue, 13-Feb-18
+        02:17:13 GMT; path=/; domain=.typicode.com; HttpOnly
+      X-Powered-By:
+      - Express
+      Vary:
+      - Origin, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - public, max-age=14400
+      Pragma:
+      - no-cache
+      Expires:
+      - Mon, 13 Feb 2017 06:17:13 GMT
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"11e-Edyz5/fajgEIi76pUYSsQw"
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - HIT
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 3304c86145c3606c-MNL
+    body:
+      encoding: UTF-8
+      string: |-
+        [
+          {
+            "postId": 1,
+            "id": 1,
+            "name": "id labore ex et quam laborum",
+            "email": "Eliseo@gardner.biz",
+            "body": "laudantium enim quasi est quidem magnam voluptate ipsam eos\ntempora quo necessitatibus\ndolor quam autem quasi\nreiciendis et nam sapiente accusantium"
+          }
+        ]
+    http_version: 
+  recorded_at: Mon, 13 Feb 2017 02:17:13 GMT
+recorded_with: VCR 3.0.3
