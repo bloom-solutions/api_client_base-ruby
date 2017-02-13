@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [TBA]
 ### Fixed
 - bug with customizing the args of an `api_action` (it didn't work at all!)
+- when building path, escape the values
 
 ## [0.2.0]
 ### Added

@@ -26,13 +26,14 @@ module APIClientBase
         request_class = Class.new do
           include APIClientBase::Request.module
           attribute :here, Integer
+          attribute :there, Integer
 
           def path
-            "/go/:here"
+            "/go/:here/and/:there"
           end
         end
-        request = request_class.new(here: 2)
-        expect(request.api_client_base_path).to eq "/go/2"
+        request = request_class.new(here: 2, there: "needs escaping")
+        expect(request.api_client_base_path).to eq "/go/2/and/needs+escaping"
       end
     end
 

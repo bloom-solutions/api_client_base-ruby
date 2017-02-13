@@ -67,7 +67,7 @@ module APIClientBase
     def default_api_client_base_path
       path.scan(/:\w+/).reduce(path) do |new_path, var|
         attribute_name = var.gsub(":", "")
-        value = self.send(attribute_name)
+        value = CGI::escape(self.send(attribute_name).to_s)
         new_path.gsub(var, value.to_s)
       end
     end
