@@ -14,10 +14,7 @@ module APIClientBase
         end
 
         class Client
-          include Virtus.model
-          attribute :host, String
-          attribute :username, String
-          attribute :password, String
+          include APIClientBase::Client.module
         end
       end
     end

@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 module APIClientBase
-  RSpec.describe Client do
+  RSpec.describe Client, type: %i[virtus] do
 
     describe ".api_action", vcr: {record: :once} do
       before do
-        module TestGemClient
+        module APIActionTestGemClient
           class Client
             include APIClientBase::Client.module(default_opts: :default_opts)
             include Virtus.model
@@ -106,7 +106,7 @@ module APIClientBase
       end
 
       it "allows calls with implicit args", vcr: {record: :once} do
-        client = TestGemClient::Client.new(
+        client = APIActionTestGemClient::Client.new(
           host: "http://jsonplaceholder.typicode.com/",
         )
         response = client.get_post(id: 2)
@@ -115,7 +115,7 @@ module APIClientBase
       end
 
       it "allows customization of arity/args", vcr: {record: :once} do
-        client = TestGemClient::Client.new(
+        client = APIActionTestGemClient::Client.new(
           host: "http://jsonplaceholder.typicode.com/",
         )
         response = client.get_comment("1", "id labore ex et quam laborum")
@@ -124,8 +124,40 @@ module APIClientBase
       end
 
       it "does not singularize the actions" do
-        client = TestGemClient::Client.new(host: "http://google.com")
+        client = APIActionTestGemClient::Client.new(host: "http://google.com")
         expect { client.get_balls }.to_not raise_error
+      end
+    end
+
+    describe "inherited attributes" do
+      before do
+        module InheritedAttrsTestGem
+          include APIClientBase::Base.module
+
+          with_configuration do
+            has :host, classes: String, default: "https://host.com"
+            has :log, values: [true, false], default: false
+            has :logger
+          end
+
+          class Client
+            include APIClientBase::Client.module
+          end
+        end
+      end
+      subject(:client_class) { InheritedAttrsTestGem::Client }
+
+      it "inherits attributes based on the configuration" do
+        expect(client_class).to have_attribute(:host)
+        expect(client_class).to have_attribute(:log)
+        expect(client_class).to have_attribute(:logger)
+      end
+
+      it "receives values from the parent module config" do
+        client = InheritedAttrsTestGem.new(log: false)
+        expect(client.host).to eq "https://host.com"
+        expect(client.log).to eq false
+        expect(client.logger).to be_nil
       end
     end
 
