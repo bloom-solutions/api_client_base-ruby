@@ -25,7 +25,7 @@ module MyGem
   include APIClientBase::Base.module
 
   with_configuration do
-    has :host, classes: String
+    has :host, classes: String, default: "https://production.com"
     has :username, classes: String
     has :password, classes: String
   end
@@ -48,25 +48,37 @@ end
 
 #### Default Options
 
+Given this config:
+
+```ruby
+module MyGem
+  include APIClientBase::Base.module
+
+  with_configuration do
+    has :host, classes: String, default: "https://production.com"
+    has :username, classes: String
+    has :password, classes: String
+  end
+end
+```
+
+Configure the `Client` like this:
+
 ```ruby
 module MyGem
   class Client
     # specifying a symbol for `default_opts` will look for a method of that name
     # and pass that into the request
-    HOST = "https://production.com"
     include APIClientBase::Client.module(default_opts: :default_opts)
 
     private
 
     def default_opts
-      # At least include `host`. Other things you may need to include: `token`, `secret`
-      { host: HOST, secret: MyGem.configuration.secret }
+      # Pass along all the things your requests need.
+      # The methods `host`, `username`, and `password` are available
+      # to your `Client` instance because it inherited these from the configuration.
+      { host: host, username: username, password: password }
     end
-  end
-
-  class Client
-    HOST = "https://production.com"
-    include APIClientBase::Client.module(default_opts: {host: HOST})
   end
 end
 ```

@@ -20,6 +20,7 @@ module APIClientBase
     extend ActiveSupport::Concern
 
     included do
+      include APIClientBase::Client::Attributes
       extend APIClientBase::Client::ClassMethods
     end
 
