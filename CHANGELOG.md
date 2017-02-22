@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- raise ArgumentError when validation schema is available and it has errors
+
 ## [1.1.0] - 2017-02-17
 ### Added
 - `Client` inherits attributes from gem namespace. No need to specify these attributes again.

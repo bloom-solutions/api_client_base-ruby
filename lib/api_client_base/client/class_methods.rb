@@ -13,17 +13,20 @@ module APIClientBase
           response_class = namespace.const_get(response_class_name)
 
           if opts[:args].is_a?(Array)
-            request_args = opts[:args].each_with_object({}).
+            request_partial_args = opts[:args].each_with_object({}).
               with_index { |(arg, hash), i| hash[arg] = args[i] }
           else
-            request_args = args.first || {}
+            request_partial_args = args.first || {}
           end
 
           default_request_opts_method =
             self.class.api_client_base_client_options[:default_opts]
           default_request_opts = send(default_request_opts_method)
+          request_args = default_request_opts.merge(request_partial_args)
 
-          request = request_class.new(default_request_opts.merge(request_args))
+          Validate.(request_class, request_args)
+
+          request = request_class.new(request_args)
           raw_response = request.()
           response_class.new(raw_response: raw_response)
         end

@@ -158,6 +158,37 @@ module MyGem
 end
 ```
 
+##### Validation
+
+APIClientBase supports validation so that your calls fail early before even hitting the server. The validation library that this supports (by default, and the only one) is dry-validations.
+
+Given this request:
+
+```ruby
+module MyGem
+  class GetUserRequest
+    attribute :user_id, Integer
+  end
+end
+```
+
+Create a dry-validations schema following this pattern:
+
+```ruby
+module MyGem
+  GetUserRequestSchema = Dry::Validation.Schema do
+    required(:user_id).filled(:int?)
+  end
+end
+```
+
+This will raise an error when you call the method:
+
+```
+client = MyGem::Client.new #...
+client.get_user(user_id: nil) # -> this raises an ArgumentError "[user_id: 'must be filled']"
+```
+
 #### Responses
 
 ```ruby
