@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://jsonplaceholder.typicode.com/comments?name=&postId=
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Typhoeus - https://github.com/typhoeus/typhoeus
+      Expect:
+      - ''
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 22 Feb 2017 10:03:50 GMT
+      Connection:
+      - keep-alive
+      Set-Cookie:
+      - __cfduid=dd60b5c476f8f95642ef65ea56377c9401487757830; expires=Thu, 22-Feb-18
+        10:03:50 GMT; path=/; domain=.typicode.com; HttpOnly
+      X-Powered-By:
+      - Express
+      Vary:
+      - Origin, Accept-Encoding
+      Access-Control-Allow-Credentials:
+      - 'true'
+      Cache-Control:
+      - public, max-age=14400
+      Pragma:
+      - no-cache
+      Expires:
+      - Wed, 22 Feb 2017 14:03:50 GMT
+      X-Content-Type-Options:
+      - nosniff
+      Etag:
+      - W/"2-11FxOYiYfpMxmANj4kGJzg"
+      Via:
+      - 1.1 vegur
+      Cf-Cache-Status:
+      - HIT
+      Server:
+      - cloudflare-nginx
+      Cf-Ray:
+      - 33519c45c07060a8-MNL
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '2'
+    body:
+      encoding: UTF-8
+      string: "[]"
+    http_version: 
+  recorded_at: Wed, 22 Feb 2017 10:03:50 GMT
+recorded_with: VCR 3.0.3

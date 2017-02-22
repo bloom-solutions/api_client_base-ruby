@@ -53,6 +53,10 @@ module APIClientBase
             end
           end
 
+          GetPostRequestSchema = Dry::Validation.Schema do
+            required(:id).filled
+          end
+
           class GetPostResponse
             include APIClientBase::Response.module
             attribute :id, String, default: :default_id
@@ -95,10 +99,12 @@ module APIClientBase
             end
 
             def default_id
+              return nil unless matching_post
               matching_post["id"]
             end
 
             def default_name
+              return nil unless matching_post
               matching_post["name"]
             end
           end
@@ -126,6 +132,27 @@ module APIClientBase
       it "does not singularize the actions" do
         client = APIActionTestGemClient::Client.new(host: "http://google.com")
         expect { client.get_balls }.to_not raise_error
+      end
+
+      describe "validations" do
+        context "a schema is available" do
+          it "validates using the schema" do
+            client = APIActionTestGemClient::Client.new(
+              host: "http://jsonplaceholder.typicode.com/",
+            )
+            expect { client.get_post(id: nil) }.
+              to raise_error(ArgumentError, {id: ["must be filled"]}.to_json)
+          end
+        end
+
+        context "a schema is not available" do
+          it "validates using the schema" do
+            client = APIActionTestGemClient::Client.new(
+              host: "http://jsonplaceholder.typicode.com/",
+            )
+            expect { client.get_comment(nil, nil) }.to_not raise_error
+          end
+        end
       end
     end
 
