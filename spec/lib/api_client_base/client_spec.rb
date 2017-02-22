@@ -3,114 +3,112 @@ require 'spec_helper'
 module APIClientBase
   RSpec.describe Client, type: %i[virtus] do
 
-    describe ".api_action", vcr: {record: :once} do
-      before do
-        module APIActionTestGemClient
-          class Client
-            include APIClientBase::Client.module(default_opts: :default_opts)
-            include Virtus.model
-            attribute :host, String
-            api_action :argless_call
-            api_action :get_post
-            api_action :get_balls
-            api_action :get_comment, args: [:post_id, :name]
+    module APIActionTestGemClient
+      class Client
+        include APIClientBase::Client.module(default_opts: :default_opts)
+        include Virtus.model
+        attribute :host, String
+        api_action :argless_call
+        api_action :get_post
+        api_action :get_balls
+        api_action :get_comment, args: [:post_id, :name]
 
-            def default_opts
-              { host: host }
-            end
-          end
-
-          class ArglessCallRequest
-            include APIClientBase::Request.module
-
-            def path
-              "/"
-            end
-          end
-
-          class ArglessCallResponse
-            include APIClientBase::Response.module
-          end
-
-          class GetBallsRequest
-            include APIClientBase::Request.module
-
-            def path
-              "/"
-            end
-          end
-
-          class GetBallsResponse
-            include APIClientBase::Response.module
-          end
-
-          class GetPostRequest
-            include APIClientBase::Request.module
-            attribute :id
-
-            def path
-              "/posts/:id"
-            end
-          end
-
-          GetPostRequestSchema = Dry::Validation.Schema do
-            required(:id).filled
-          end
-
-          class GetPostResponse
-            include APIClientBase::Response.module
-            attribute :id, String, default: :default_id
-            attribute :title, String, default: :default_title
-
-            def default_id
-              data["id"]
-            end
-
-            def default_title
-              data["title"]
-            end
-
-            def data
-              JSON.parse(raw_response.body)
-            end
-          end
-
-          class GetCommentRequest
-            include APIClientBase::Request.module
-            attribute :post_id
-            attribute :name
-
-            def path
-              "/comments"
-            end
-
-            def params
-              {postId: post_id, name: name}
-            end
-          end
-
-          class GetCommentResponse
-            include APIClientBase::Response.module
-            attribute :id, String, default: :default_id
-            attribute :name, String, default: :default_name
-
-            def matching_post
-              JSON.parse(raw_response.body).first
-            end
-
-            def default_id
-              return nil unless matching_post
-              matching_post["id"]
-            end
-
-            def default_name
-              return nil unless matching_post
-              matching_post["name"]
-            end
-          end
+        def default_opts
+          { host: host }
         end
       end
 
+      class ArglessCallRequest
+        include APIClientBase::Request.module
+
+        def path
+          "/"
+        end
+      end
+
+      class ArglessCallResponse
+        include APIClientBase::Response.module
+      end
+
+      class GetBallsRequest
+        include APIClientBase::Request.module
+
+        def path
+          "/"
+        end
+      end
+
+      class GetBallsResponse
+        include APIClientBase::Response.module
+      end
+
+      class GetPostRequest
+        include APIClientBase::Request.module
+        attribute :id
+
+        def path
+          "/posts/:id"
+        end
+      end
+
+      GetPostRequestSchema = Dry::Validation.Schema do
+        required(:id).filled
+      end
+
+      class GetPostResponse
+        include APIClientBase::Response.module
+        attribute :id, String, default: :default_id
+        attribute :title, String, default: :default_title
+
+        def default_id
+          data["id"]
+        end
+
+        def default_title
+          data["title"]
+        end
+
+        def data
+          JSON.parse(raw_response.body)
+        end
+      end
+
+      class GetCommentRequest
+        include APIClientBase::Request.module
+        attribute :post_id
+        attribute :name
+
+        def path
+          "/comments"
+        end
+
+        def params
+          {postId: post_id, name: name}
+        end
+      end
+
+      class GetCommentResponse
+        include APIClientBase::Response.module
+        attribute :id, String, default: :default_id
+        attribute :name, String, default: :default_name
+
+        def matching_post
+          JSON.parse(raw_response.body).first
+        end
+
+        def default_id
+          return nil unless matching_post
+          matching_post["id"]
+        end
+
+        def default_name
+          return nil unless matching_post
+          matching_post["name"]
+        end
+      end
+    end
+
+    describe ".api_action", vcr: {record: :once} do
       it "allows calls with implicit args", vcr: {record: :once} do
         client = APIActionTestGemClient::Client.new(
           host: "http://jsonplaceholder.typicode.com/",
