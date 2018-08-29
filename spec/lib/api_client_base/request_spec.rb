@@ -21,12 +21,27 @@ module APIClientBase
       end
     end
 
+    describe "#uri" do
+      context "path is not defined" do
+        it "does not apply the path to `host`" do
+          request_class = Class.new do
+            include APIClientBase::Request.module
+          end
+
+          request = request_class.new(host: "http://d.c/hi/there")
+          expect(request.uri).to eq "http://d.c/hi/there"
+        end
+      end
+    end
+
     describe "#api_client_base_path" do
       it "is built from the request's attributes" do
         request_class = Class.new do
           include APIClientBase::Request.module
           attribute :here, Integer
           attribute :there, Integer
+
+          private
 
           def path
             "/go/:here/and/:there"

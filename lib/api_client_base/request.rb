@@ -60,11 +60,12 @@ module APIClientBase
 
     def default_uri
       uri = URI(host)
-      uri.path = api_client_base_path
+      uri.path = api_client_base_path if !api_client_base_path.nil?
       uri.to_s
     end
 
     def default_api_client_base_path
+      return if !respond_to?(:path, true)
       path.scan(/:\w+/).reduce(path) do |new_path, var|
         attribute_name = var.gsub(":", "")
         value = CGI::escape(self.send(attribute_name).to_s)
