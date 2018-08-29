@@ -1,7 +1,7 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "pry-byebug"
 require "api_client_base"
-require "virtus-matchers"
+require "virtus/matchers/rspec"
 require "dry-validation"
 require 'vcr'
 
