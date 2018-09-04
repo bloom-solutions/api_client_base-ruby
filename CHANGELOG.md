@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.4.0] - 2018-08-29
+## [1.4.0] - 2018-09-04
 ### Added
 - Support `host` configurations that already have a path
 
