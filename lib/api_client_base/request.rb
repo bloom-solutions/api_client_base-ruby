@@ -60,7 +60,16 @@ module APIClientBase
 
     def default_uri
       uri = if !api_client_base_path.nil?
-              URI.join(host, api_client_base_path)
+              path = URI.parse(host).path
+              if !path.empty?
+                URI.join(
+                  host, 
+                  [path, "/"].join, 
+                  api_client_base_path[1..-1]
+                )
+              else
+                URI.join(host, api_client_base_path)
+              end
             else
               URI(host)
             end
