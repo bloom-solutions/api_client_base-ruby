@@ -1,6 +1,7 @@
 require "active_support/concern"
 require "active_support/core_ext/class/attribute"
 require "active_support/core_ext/module/attribute_accessors"
+require "active_support/core_ext/object/blank"
 require "active_support/inflector"
 require "gem_config"
 require "virtus"

@@ -32,6 +32,21 @@ module APIClientBase
           expect(request.uri).to eq "http://d.c/hi/there"
         end
       end
+
+      context "path is defined and host has a path" do
+        it "joins the path" do
+          request_class = Class.new do
+            include APIClientBase::Request.module
+            
+            def path
+              "/moar"
+            end
+          end
+
+          request = request_class.new(host: "http://d.c/hi/there")
+          expect(request.uri).to eq "http://d.c/hi/there/moar"
+        end
+      end
     end
 
     describe "#api_client_base_path" do
