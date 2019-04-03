@@ -154,6 +154,14 @@ module MyGem
     def default_action
       :post # defaults to :get
     end
+
+    def before_call
+      # You need not define this, but it might be helpful if you want to log things, for example, before the http request is executed.
+      # The following example would require you to define a `logger` attribute
+
+      self.logger.debug "Will make a #{action} call: #{body}"
+    end
+
   end
 end
 ```
