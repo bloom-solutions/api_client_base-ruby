@@ -37,7 +37,7 @@ module APIClientBase
         it "joins the path" do
           request_class = Class.new do
             include APIClientBase::Request.module
-            
+
             def path
               "/moar"
             end
