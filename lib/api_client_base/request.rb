@@ -32,6 +32,8 @@ module APIClientBase
     end
 
     def call
+      before_call
+
       require "typhoeus"
       if defined?(Typhoeus)
         request = Typhoeus::Request.new(
@@ -85,6 +87,8 @@ module APIClientBase
         new_path.gsub(var, value.to_s)
       end
     end
+
+    def before_call; end
 
   end
 end

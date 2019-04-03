@@ -67,5 +67,35 @@ module APIClientBase
       end
     end
 
+    describe "#before_call" do
+      it "first thing called in `#call`", vcr: {record: :once} do
+        request_class = Class.new do
+          include APIClientBase::Request.module
+          attribute :before_call_test, String
+          attribute :user_id, Integer
+
+          private
+
+          def path
+            "/users/:user_id"
+          end
+
+          def before_call
+            self.before_call_test = "called"
+          end
+        end
+
+        request = request_class.new({
+          host: "https://jsonplaceholder.typicode.com",
+          user_id: 1,
+        })
+        expect(request.before_call_test).to be_nil
+
+        request.()
+
+        expect(request.before_call_test).to eq "called"
+      end
+    end
+
   end
 end
