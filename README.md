@@ -206,6 +206,7 @@ module MyGem
     # - has `#status` method that is delegated to `raw_response.status`
     # - has `#code` method to get the response's code
     # - has `#raw_response` which is a Typhoeus response object
+    # - has `#success` which is delegated to `raw_response.success?`. May be accessed via `#success?`
 
     # You're encouraged to use Virtus attributes to extract information cleanly
     attribute :id, Integer, lazy: true, default: :default_id
