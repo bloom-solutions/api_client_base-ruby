@@ -97,5 +97,54 @@ module APIClientBase
       end
     end
 
+    describe "#run" do
+      let(:request_class) do
+        Class.new do
+          include APIClientBase::Request.module
+
+          private
+
+          def action
+            "post"
+          end
+
+          def headers
+            {"Content-Type" => "application/json"}
+          end
+
+          def body
+            {"bo" => "deh"}.to_json
+          end
+
+          def params
+            {hi: "there"}
+          end
+
+        end
+      end
+      let(:request) do
+        request_class.new(
+          host: "https://jsonplaceholder.typicode.com",
+        )
+      end
+      let(:typhoeus_request) { instance_double(Typhoeus::Request) }
+
+      it "makes the typhoeus call" do
+        expect(request).to receive(:run).and_call_original
+
+        expect(Typhoeus::Request).to receive(:new).with(
+          "https://jsonplaceholder.typicode.com",
+          method: "post",
+          headers: {"Content-Type" => "application/json"},
+          body: {"bo" => "deh"}.to_json,
+          params: {hi: "there"},
+        ).and_return(typhoeus_request)
+
+        expect(typhoeus_request).to receive(:run)
+
+        request.()
+      end
+    end
+
   end
 end
