@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Added
+- Move http-related code to Request#run. This is the one that should be overridden, instead of call, since `#call` calls other methods like `before_call`
+
 ## [1.5.0] - 2019-04-03
 ### Added
 - Allow developer to define `before_call` in requests to execute code

@@ -33,7 +33,12 @@ module APIClientBase
 
     def call
       before_call
+      run
+    end
 
+    private
+
+    def run
       require "typhoeus"
       if defined?(Typhoeus)
         request = Typhoeus::Request.new(
@@ -46,11 +51,9 @@ module APIClientBase
 
         request.run
       else
-        fail "Either override #call or make sure Typhoeus is available for use."
+        fail "Either override #run or make sure Typhoeus is available for use."
       end
     end
-
-    private
 
     def headers ; {}  ; end
     def body    ; nil ; end
