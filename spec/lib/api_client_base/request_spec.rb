@@ -146,5 +146,51 @@ module APIClientBase
       end
     end
 
+    describe "typhoeus options" do
+      let(:request_class) do
+        Class.new do
+          include APIClientBase::Request.module
+
+          def params
+            {my: "params"}
+          end
+
+          def body
+            {my: "body"}.to_json
+          end
+
+          def headers
+            {headers: "ok"}
+          end
+        end
+      end
+      let(:request) do
+        request_class.new(
+          host: "https://jsonplaceholder.typicode.com",
+          proxy: "proxy.com",
+        )
+      end
+      let(:typhoeus_request) { instance_double(Typhoeus::Request) }
+
+      it "uses #{BuildTyphoeusOptions}" do
+        expect(BuildTyphoeusOptions).to receive(:call).with(
+          method: :get,
+          headers: {headers: "ok"},
+          body: {my: "body"}.to_json,
+          params: {my: "params"},
+          proxy: "proxy.com",
+        ).and_return({some: "options"})
+
+        expect(Typhoeus::Request).to receive(:new).with(
+          "https://jsonplaceholder.typicode.com",
+          {some: "options"},
+        ).and_return(typhoeus_request)
+
+        expect(typhoeus_request).to receive(:run)
+
+        request.()
+      end
+    end
+
   end
 end

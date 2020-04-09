@@ -29,6 +29,7 @@ module APIClientBase
         lazy: true,
         default: :default_api_client_base_path,
       })
+      attribute :proxy, String
     end
 
     def call
@@ -41,14 +42,7 @@ module APIClientBase
     def run
       require "typhoeus"
       if defined?(Typhoeus)
-        request = Typhoeus::Request.new(
-          uri,
-          method: action,
-          headers: headers,
-          body: body,
-          params: params,
-        )
-
+        request = Typhoeus::Request.new(uri, typhoeus_options)
         request.run
       else
         fail "Either override #run or make sure Typhoeus is available for use."
@@ -92,6 +86,16 @@ module APIClientBase
     end
 
     def before_call; end
+
+    def typhoeus_options
+      BuildTyphoeusOptions.(
+        method: action,
+        headers: headers,
+        body: body,
+        params: params,
+        proxy: proxy,
+      )
+    end
 
   end
 end
