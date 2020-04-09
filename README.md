@@ -197,6 +197,9 @@ client = MyGem::Client.new #...
 client.get_user(user_id: nil) # -> this raises an ArgumentError "[user_id: 'must be filled']"
 ```
 
+##### Proxy
+Requests automatically have `proxy`. If set and you are relying on using Typhoeus, proxy will be passed on and used by Typhoeus.
+
 #### Responses
 
 ```ruby
