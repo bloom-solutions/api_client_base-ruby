@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.6.0] - 2020-04-09
 ### Added
 - Move http-related code to Request#run. This is the one that should be overridden, instead of call, since `#call` calls other methods like `before_call`
 - Set `#proxy` attribute to requests. This is passed to Typhoeus if present
