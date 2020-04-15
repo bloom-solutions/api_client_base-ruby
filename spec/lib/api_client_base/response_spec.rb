@@ -47,5 +47,19 @@ module APIClientBase
       end
     end
 
+    describe "#body" do
+      let(:response_class) do
+        Class.new do
+          include APIClientBase::Response.module
+        end
+      end
+
+      it "is the body of the raw_response" do
+        raw_response = instance_double(Typhoeus::Response, body: "hi")
+        response = response_class.new(raw_response: raw_response)
+        expect(response.body).to eq "hi"
+      end
+    end
+
   end
 end

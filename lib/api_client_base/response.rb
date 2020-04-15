@@ -25,6 +25,7 @@ module APIClientBase
       attribute :raw_response, Object
       attribute :success, self::Boolean, lazy: true, default: :default_success
       attribute :code, Integer, lazy: true, default: :default_code
+      attribute :body, String, lazy: true, default: :default_body
     end
 
     def default_success
@@ -33,6 +34,10 @@ module APIClientBase
 
     def default_code
       raw_response.code
+    end
+
+    def default_body
+      raw_response.body
     end
 
   end
