@@ -42,7 +42,16 @@ module APIClientBase
     def run
       require "typhoeus"
       if defined?(Typhoeus)
-        request = Typhoeus::Request.new(uri, typhoeus_options)
+        opts = BuildTyphoeusOptions.(
+          {
+            method: action,
+            headers: headers,
+            body: body,
+            params: params,
+            proxy: proxy,
+          }.merge(typhoeus_options)
+        )
+        request = Typhoeus::Request.new(uri, opts)
         request.run
       else
         fail "Either override #run or make sure Typhoeus is available for use."
@@ -88,13 +97,7 @@ module APIClientBase
     def before_call; end
 
     def typhoeus_options
-      BuildTyphoeusOptions.(
-        method: action,
-        headers: headers,
-        body: body,
-        params: params,
-        proxy: proxy,
-      )
+      {}
     end
 
   end
