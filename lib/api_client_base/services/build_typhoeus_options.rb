@@ -1,22 +1,9 @@
 module APIClientBase
   class BuildTyphoeusOptions
 
-    def self.call(
-      method: nil,
-      headers: nil,
-      body: nil,
-      params: nil,
-      proxy: nil
-    )
-      opts = {
-        method: method,
-        headers: headers,
-        body: body,
-        params: params,
-      }
-
-      if proxy.present?
-        opts[:proxy] = proxy
+    def self.call(opts={})
+      if opts[:proxy].blank?
+        opts = opts.except(:proxy)
       end
 
       opts
