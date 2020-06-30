@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Allow users to override typhoeus_options to pass any args that we haven't defined
+
+## [1.8.0] - 2020-06-30
+### Added
 - Allow all Typhoeus options to be passed to BuildTyphoeusOptions. This is useful when overriding the method `typhoeus_options` in requests
 
 ## [1.7.0] - 2020-04-15

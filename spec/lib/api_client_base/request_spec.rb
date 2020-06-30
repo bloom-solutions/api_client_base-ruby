@@ -162,6 +162,10 @@ module APIClientBase
           def headers
             {headers: "ok"}
           end
+
+          def typhoeus_options
+            { userpwd: "hi:there" }
+          end
         end
       end
       let(:request) do
@@ -179,6 +183,7 @@ module APIClientBase
           body: {my: "body"}.to_json,
           params: {my: "params"},
           proxy: "proxy.com",
+          userpwd: "hi:there",
         ).and_return({some: "options"})
 
         expect(Typhoeus::Request).to receive(:new).with(

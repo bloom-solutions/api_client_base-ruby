@@ -71,8 +71,8 @@ module APIClientBase
               path = URI.parse(host).path
               if path.present?
                 URI.join(
-                  host, 
-                  [path, "/"].join, 
+                  host,
+                  [path, "/"].join,
                   api_client_base_path[1..-1]
                 )
               else
