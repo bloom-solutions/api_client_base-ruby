@@ -51,8 +51,16 @@ module APIClientBase
         end
       end
 
-      GetPostRequestSchema = Dry::Validation.Schema do
-        required(:id).filled
+      if Dry::Validation.const_defined?("Schema") # version 0.x
+        GetPostRequestSchema = Dry::Validation.Schema do
+          required(:id).filled
+        end
+      elsif Dry::Validation.const_defined?("Contract") # version 1.x
+        class GetPostRequestSchema < Dry::Validation::Contract
+          schema do
+            required(:id).filled
+          end
+        end
       end
 
       class GetPostResponse

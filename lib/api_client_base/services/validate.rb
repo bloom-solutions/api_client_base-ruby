@@ -11,11 +11,16 @@ module APIClientBase
     def self.errors_of(klass, attrs)
       schema = schema_of(klass)
       return [] if schema.nil?
-      schema.(attrs).errors
+
+      schema.(attrs).errors.to_h
     end
 
     def self.schema_of(klass)
-      "#{klass.name}Schema".constantize
+      contract_class = "#{klass.name}Schema".constantize
+
+      return contract_class if Dry::Validation.const_defined?("Schema")
+
+      contract_class.new
     rescue NameError
     end
 

@@ -9,8 +9,16 @@ module APIClientBase
           include APIClientBase::Request.module
         end
 
-        ValidateTestWithSchemaRequestSchema = Dry::Validation.Schema do
-          required(:name).filled
+        if Dry::Validation.const_defined?("Schema")
+          ValidateTestWithSchemaRequestSchema = Dry::Validation.Schema do
+            required(:name).filled
+          end
+        elsif Dry::Validation.const_defined?("Contract")
+          class ValidateTestWithSchemaRequestSchema < Dry::Validation::Contract
+            schema do
+              required(:name).filled
+            end
+          end
         end
       end
 
