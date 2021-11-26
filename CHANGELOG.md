@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.11.0] - 2021-11-26
 ### Added
 - `after_response` hook
 - Add `#headers` and `#header(key)` methods to response for easy access to the headers
