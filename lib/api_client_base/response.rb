@@ -26,6 +26,7 @@ module APIClientBase
       attribute :success, self::Boolean, lazy: true, default: :default_success
       attribute :code, Integer, lazy: true, default: :default_code
       attribute :body, String, lazy: true, default: :default_body
+      attribute :headers, Hash, lazy: true, default: :default_headers
     end
 
     def default_success
@@ -38,6 +39,14 @@ module APIClientBase
 
     def default_body
       raw_response.body
+    end
+
+    def default_headers
+      (raw_response.headers || {}).transform_keys {|key| key.upcase }
+    end
+
+    def header(key)
+      headers[key.upcase]
     end
 
   end

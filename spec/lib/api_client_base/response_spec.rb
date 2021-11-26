@@ -15,6 +15,63 @@ module APIClientBase
       it { is_expected.to have_attribute(:code, Integer) }
     end
 
+    describe "#headers" do
+      let(:response_class) do
+        Class.new do
+          include APIClientBase::Response.module
+        end
+      end
+      let(:headers) do
+        { "CONTENT-TYPE" => "application/json" }
+      end
+      let(:raw_response) do
+        instance_double(Typhoeus::Response, headers: headers)
+      end
+      let(:response) { response_class.new(raw_response: raw_response) }
+
+      it "gives access to the headers hash" do
+        expect(response.headers).to eq headers
+      end
+    end
+
+    describe "#header" do
+      let(:response_class) do
+        Class.new do
+          include APIClientBase::Response.module
+        end
+      end
+      let(:raw_response) do
+        instance_double(Typhoeus::Response, headers: headers)
+      end
+      let(:response) { response_class.new(raw_response: raw_response) }
+
+      context "headers is nil" do
+        let(:headers) { nil }
+        subject { response.header("Content-Type") }
+        it { is_expected.to be_nil }
+      end
+
+      context "headers exist but no key" do
+        let(:headers) { {} }
+        subject { response.header("Content-Type") }
+        it { is_expected.to be_nil }
+      end
+
+      context "header exists" do
+        let(:headers) { {"Content-Type" => "application/json"} }
+
+        context "exact match" do
+          subject { response.header("Content-Type") }
+          it { is_expected.to eq "application/json" }
+        end
+
+        context "different case" do
+          subject { response.header("content-type") }
+          it { is_expected.to eq "application/json" }
+        end
+      end
+    end
+
     describe "#success?" do
       let(:response_class) do
         Class.new do
