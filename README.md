@@ -240,7 +240,7 @@ module MyGem
 end
 ```
 
-You can an example gem at https://github.com/imacchiato/bridge_client-ruby.
+You can an example gem [here](https://github.com/bloom-solutions/binance_client-ruby).
 
 ## Development
 
@@ -250,7 +250,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/imacchiato/api_client-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/bloom-solutions/api_client-ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 

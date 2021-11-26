@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Abstractions to help author API wrappers in Ruby.}
   spec.description   = %q{Abstractions to help author API wrappers in Ruby.}
-  spec.homepage      = "https://github.com/imacchiato/api_client-ruby"
+  spec.homepage      = "https://github.com/bloom-solutions/api_client-ruby"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
