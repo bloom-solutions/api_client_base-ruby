@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - `after_response` hook
+- Add `#headers` and `#header(key)` methods to response for easy access to the headers
 
 ## [1.10.0] - 2021-06-15
 ### Added
