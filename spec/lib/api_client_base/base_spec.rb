@@ -43,5 +43,16 @@ module APIClientBase
       expect(client.password).to be_nil
     end
 
+    it "allows setting of `after_response`" do
+      hook = Class.new do
+        def self.call(request, response)
+        end
+      end
+
+      GemTestBase.configuration.after_response = hook
+
+      expect(GemTestBase.configuration.after_response).to eq hook
+    end
+
   end
 end

@@ -22,6 +22,24 @@ module APIClientBase
     included do
       include APIClientBase::Client::Attributes
       extend APIClientBase::Client::ClassMethods
+
+      private
+
+      def _api_client_call_hook_with(request, response)
+        hook = _api_client_after_response
+        return if hook.nil?
+
+        hook.(request, response)
+      end
+
+      def _api_client_gem_module
+        @_api_client_gem_module ||= self.class.name.deconstantize.constantize
+      end
+
+      def _api_client_after_response
+        return nil if not _api_client_gem_module.respond_to?(:configuration)
+        _api_client_gem_module.configuration.after_response
+      end
     end
 
   end

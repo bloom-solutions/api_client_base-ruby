@@ -21,6 +21,10 @@ module APIClientBase
 
     included do
       include GemConfig::Base
+
+      with_configuration do
+        has :after_response
+      end
     end
 
   end
