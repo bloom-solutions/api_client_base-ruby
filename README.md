@@ -42,6 +42,8 @@ MyGem.configure do |c|
 end
 ```
 
+Note: there is a default configuration setting called `after_response`. See the "Response hooks" section for more details.
+
 - instantiate `MyGem::Client` by calling `MyGem.new(host: "https://api.com", username: "user", password: "password")`. If you do not specify an option, it will use the gem's default.
 
 ### Configuring the `Client`
@@ -241,6 +243,35 @@ end
 ```
 
 You can an example gem [here](https://github.com/bloom-solutions/binance_client-ruby).
+
+#### Response hooks
+
+If you want to give the applications access to the request and response objects after each response (useful when tracking rate limits that are reported in the response, for example), then:
+
+```ruby
+MyGem.configure do |c|
+  c.after_request = ->(request, response) do
+    if response.header("remaining-requets") < 20
+      Rails.logger.warn "mayday!"
+    end
+  end
+end
+```
+
+Note: the request and response objects are the request and response instances such as:
+- `GetUserResponse`
+- `GetUserRequest`
+
+You can assign any object that response to `call`:
+
+```ruby
+class AfterMyGemResponse
+  def self.call(request, response)
+  end
+end
+```
+
+Note: avoid putting long running/expensive requests here because this will block the Ruby process.
 
 ## Development
 

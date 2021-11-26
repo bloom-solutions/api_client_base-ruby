@@ -4,6 +4,8 @@ module APIClientBase
   RSpec.describe Client, type: %i[virtus] do
 
     module APIActionTestGemClient
+      include APIClientBase::Base.module
+
       class Client
         include APIClientBase::Client.module(default_opts: :default_opts)
         include Virtus.model
@@ -191,6 +193,49 @@ module APIClientBase
         expect(client.host).to eq "https://host.com"
         expect(client.log).to eq false
         expect(client.logger).to be_nil
+      end
+    end
+
+    describe "after_response hook", vcr: {record: :once} do
+      let(:test_hook) do
+        ->(request, response) do
+          $hooked_request = request
+          $hooked_response = response
+        end
+      end
+
+      context "hook responding to `call` exists" do
+        before do
+          APIActionTestGemClient.configuration.after_response = test_hook
+        end
+
+        it "is called" do
+          client = APIActionTestGemClient::Client.new(
+            host: "http://jsonplaceholder.typicode.com/",
+          )
+          response = client.get_post(id: 2)
+
+          expect($hooked_request).to be_a APIActionTestGemClient::GetPostRequest
+          expect($hooked_request.id).to eq 2
+          expect($hooked_response).to eq response
+        end
+      end
+
+      context "hook does not exist" do
+        it "does not blow up" do
+          expect(test_hook).to_not receive(:call)
+
+          client = APIActionTestGemClient::Client.new(
+            host: "http://jsonplaceholder.typicode.com/",
+          )
+          response = client.get_post(id: 2)
+        end
+      end
+
+      after do
+        APIActionTestGemClient.configuration.after_response = nil
+        $hooked_request = nil
+        $hooked_response = nil
       end
     end
 

@@ -28,7 +28,11 @@ module APIClientBase
 
           request = request_class.new(request_args)
           raw_response = request.()
-          response_class.new(raw_response: raw_response)
+          response = response_class.new(raw_response: raw_response)
+
+          _api_client_call_hook_with request, response
+
+          response
         end
       end
 
